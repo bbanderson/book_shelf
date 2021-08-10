@@ -30,3 +30,19 @@ import Error from './pages/Error';
   </BrowserRouter>
 </ErrorBoundary>
 ```
+
+### 4. 비동기 처리를 위한 Redux 준비
+```shell
+yarn add redux react-redux redux-saga redux-devtools-extension redux-actions
+yarn add @types/{react-redux,redux-actions} -D
+```
+```
+.
+└── src
+    └── redux
+        ├── create.ts
+        └── modules
+            ├── reducer.ts
+            ├── auth.ts
+            └── rootSaga.ts
+```
