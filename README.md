@@ -46,3 +46,13 @@ yarn add @types/{react-redux,redux-actions} -D
             ├── auth.ts
             └── rootSaga.ts
 ```
+
+### 5. 디자인 라이브러리 Ant Design 준비
+```shell
+yarn add antd
+yarn add @ant-design/icons
+```
+```tsx
+// index.tsx
+import 'antd/dist/antd.css';
+```
