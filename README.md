@@ -56,3 +56,78 @@ yarn add @ant-design/icons
 // index.tsx
 import 'antd/dist/antd.css';
 ```
+
+### 6. 로그인 설계
+
+#### 6-1.`useRef`를 활용한 Uncontrolled Component 방식으로 input 데이터 관리
+```tsx
+// signin.tsx
+/* ... */
+const emailRef = useRef<Input>(null); // null 할당을 통해 타입 에러 방지
+/* ... */
+<Input ref={emailRef} />
+/* ... */
+```
+#### 6-2. 로그인 API 호출 함수 타입 정의
+children을 제외하고는 `interface`에서 정의한 타입과 Component의 `props`가 동일해집니다.  
+```tsx
+// Signin.tsx (Component)
+type LoginReqType = { // types.ts로 분리함으로써 재사용하게 함
+  email: string;
+  password: string;
+};
+
+interface SigninProps {
+  login: (reqData: LoginReqType) => void;
+}
+
+const Signin: React.FC<SigninProps> = ({ login }) => {
+  return <div></div>;
+};
+```
+
+```tsx
+// SigninContainer.tsx (Container)
+export default function SigninContainer() {
+  const login = useCallback((reqData) => {
+    /* saga 함수 호출 및 비동기 처리 부분 */
+  }, []);
+  return <Signin login={login} />;
+}
+```
+
+#### 6-3. `saga`에서 비동기 로직 부분을 `Service` 모듈로 위임
+
+```
+.
+└── src
+    ├── redux
+    │   ├── create.ts
+    │   └── modules
+    │       ├── reducer.ts
+    │       ├── auth.ts
+    │       └── rootSaga.ts
+    │
+    ├── services
+    │   └── UserService.ts
+    │
+    └── types.ts
+```
+
+```tsx
+// services/UserService.ts
+
+/* Token 발급을 위한 API 로직 분리 */
+import axios from 'axios';
+import { LoginReqType } from '../types';
+
+const USER_API_URL = '';
+
+/* API */
+export default class UserService {
+  public static async login(reqData: LoginReqType): Promise<string> {
+    const response = await axios.post(USER_API_URL, reqData);
+    return response.data.token;
+  }
+}
+```
