@@ -6,6 +6,7 @@ import styles from './Signin.module.css';
 
 interface SigninProps {
   login: (reqData: LoginReqType) => void;
+  children: React.ReactNode;
 }
 
 const Signin: React.FC<SigninProps> = ({ login }) => {
@@ -66,7 +67,6 @@ const Signin: React.FC<SigninProps> = ({ login }) => {
   function click() {
     const email = emailRef.current!.state.value;
     const password = passwordRef.current!.state.value;
-    console.log(email, password);
     login({ email, password });
   }
 };
