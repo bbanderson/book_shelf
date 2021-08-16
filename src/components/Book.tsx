@@ -13,6 +13,7 @@ import styles from './Book.module.css';
 interface BookProps extends IBook {
   bookId: number;
   title: string;
+  deleteBook: (bookId: number) => void;
 }
 const Book: React.FC<BookProps> = ({
   bookId,
@@ -20,59 +21,67 @@ const Book: React.FC<BookProps> = ({
   author,
   createdAt,
   url,
-}) => (
-  <div className={styles.book}>
-    <div className={styles.title}>
-      <Link to={`/book/${bookId}`} className={styles.link_detail_title}>
-        <BookOutlined />
-        {title}
-      </Link>
-    </div>
-    <div className={styles.author}>
-      <Link to={`/book/${bookId}`} className={styles.link_detail_author}>
-        {author}
-      </Link>
-    </div>
-    <div className={styles.created}>
-      {moment(createdAt).format('MM-DD YYYY hh:mm a')}
-    </div>
-    <div className={styles.tooltips}>
-      <Tooltip title={url}>
-        <a
-          href={url}
-          target="_blank"
-          rel="noreferrer"
-          className={styles.link_url}
-        >
+  deleteBook,
+}) => {
+  return (
+    <div className={styles.book}>
+      <div className={styles.title}>
+        <Link to={`/book/${bookId}`} className={styles.link_detail_title}>
+          <BookOutlined />
+          {title}
+        </Link>
+      </div>
+      <div className={styles.author}>
+        <Link to={`/book/${bookId}`} className={styles.link_detail_author}>
+          {author}
+        </Link>
+      </div>
+      <div className={styles.created}>
+        {moment(createdAt).format('MM-DD YYYY hh:mm:ss a')}
+      </div>
+      <div className={styles.tooltips}>
+        <Tooltip title={url}>
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className={styles.link_url}
+          >
+            <Button
+              size="small"
+              type="primary"
+              shape="circle"
+              icon={<HomeOutlined />}
+              className={styles.button_url}
+            />
+          </a>
+        </Tooltip>
+        <Tooltip title="Edit">
+          <Button
+            size="small"
+            shape="circle"
+            icon={<EditOutlined />}
+            className={styles.button_edit}
+          />
+        </Tooltip>
+        <Tooltip title="Delete">
           <Button
             size="small"
             type="primary"
             shape="circle"
-            icon={<HomeOutlined />}
-            className={styles.button_url}
+            icon={<DeleteOutlined />}
+            danger
+            className={styles.button_delete}
+            onClick={clickDelete}
           />
-        </a>
-      </Tooltip>
-      <Tooltip title="Edit">
-        <Button
-          size="small"
-          shape="circle"
-          icon={<EditOutlined />}
-          className={styles.button_edit}
-        />
-      </Tooltip>
-      <Tooltip title="Delete">
-        <Button
-          size="small"
-          type="primary"
-          shape="circle"
-          icon={<DeleteOutlined />}
-          danger
-          className={styles.button_delete}
-        />
-      </Tooltip>
+        </Tooltip>
+      </div>
     </div>
-  </div>
-);
+  );
+
+  function clickDelete() {
+    deleteBook(bookId);
+  }
+};
 
 export default Book;

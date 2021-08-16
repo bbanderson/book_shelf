@@ -15,16 +15,18 @@ interface ListProps {
   getBooks: () => void; // 인자와 반환 모두 없음
   goAdd: () => void;
   logout: () => void;
+  deleteBook: (bookId: number) => void;
 }
 
-export default function List({
+const List: React.FC<ListProps> = ({
   books,
   loading,
   getBooks,
   error,
   goAdd,
   logout,
-}: ListProps) {
+  deleteBook,
+}) => {
   useEffect(() => {
     getBooks();
   }, [getBooks]);
@@ -65,7 +67,9 @@ export default function List({
             title: 'Book',
             dataIndex: 'book',
             key: 'book',
-            render: (text, record) => <Book {...record} />,
+            render: (text, record) => (
+              <Book deleteBook={deleteBook} {...record} />
+            ),
           },
         ]}
         loading={books === null || loading}
@@ -76,4 +80,6 @@ export default function List({
       />
     </Layout>
   );
-}
+};
+
+export default List;

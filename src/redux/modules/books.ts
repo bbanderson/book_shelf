@@ -3,7 +3,12 @@ import { Action } from 'redux';
 import { createActions, handleActions } from 'redux-actions';
 import { call, put, select, takeEvery, takeLatest } from 'redux-saga/effects';
 import BookService from '../../services/BookService';
-import { IBook, BooksState, AddBookAction } from '../../types';
+import {
+  IBook,
+  BooksState,
+  AddBookAction,
+  DeleteBookAction,
+} from '../../types';
 
 const initialState: BooksState = {
   books: null,
@@ -42,9 +47,14 @@ export default reducer;
 
 // saga
 
-export const { getBooks, addBook } = createActions('GET_BOOKS', 'ADD_BOOK', {
-  prefix,
-});
+export const { getBooks, addBook, deleteBook } = createActions(
+  'GET_BOOKS',
+  'ADD_BOOK',
+  'DELETE_BOOK',
+  {
+    prefix,
+  }
+);
 
 function* getBooksSaga() {
   try {
@@ -70,8 +80,22 @@ function* addBookSaga(action: AddBookAction) {
   }
 }
 
+function* deleteBookSaga(action: DeleteBookAction) {
+  try {
+    yield put(pending());
+    const token: string = yield select((state) => state.auth.token);
+    yield call(BookService.deleteBook, token, action.payload);
+    const books: IBook[] = yield select((state) => state.books.books);
+    const filtered: IBook[] = books.filter((v) => v.bookId !== action.payload);
+    yield put(success(filtered));
+  } catch (error) {
+    yield put(fail(new Error(error?.response?.data?.error || 'UNKNOWN_ERROR')));
+  }
+}
+
 export function* booksSaga() {
   // 중복된 호출 중 가장 마지막 것만 취득
   yield takeLatest(`${prefix}/GET_BOOKS`, getBooksSaga);
   yield takeEvery(`${prefix}/ADD_BOOK`, addBookSaga);
+  yield takeEvery(`${prefix}/DELETE_BOOK`, deleteBookSaga);
 }

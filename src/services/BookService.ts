@@ -20,7 +20,12 @@ export default class BookService {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data);
     return response.data;
+  }
+
+  public static async deleteBook(token: string, bookId: number): Promise<void> {
+    await axios.delete(`${BOOK_API_URL}/${bookId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   }
 }

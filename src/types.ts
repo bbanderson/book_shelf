@@ -44,3 +44,7 @@ export interface BookReqType {
 export interface AddBookAction extends Action {
   payload: BookReqType;
 }
+
+export interface DeleteBookAction extends Action {
+  payload: number;
+}
