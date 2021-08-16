@@ -1,4 +1,5 @@
 import { RouterState } from 'connected-react-router';
+import { Action } from 'redux';
 import { AnyAction, Reducer } from 'redux';
 
 export type LoginReqType = {
@@ -31,4 +32,15 @@ export interface IBook {
   message: string;
   url: string;
   createdAt: string;
+}
+
+export interface BookReqType {
+  title: string;
+  comment: string;
+  author: string;
+  url: string;
+}
+
+export interface AddBookAction extends Action {
+  payload: BookReqType;
 }
