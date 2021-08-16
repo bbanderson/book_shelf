@@ -10,4 +10,6 @@ export default class BookService {
     });
     return response.data;
   }
+
+  public static async addBook() {}
 }

@@ -1,5 +1,8 @@
 import { Button, PageHeader, Table } from 'antd';
+import { push } from 'connected-react-router';
+import { useCallback } from 'react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { IBook } from '../types';
 import Book from './Book';
 import Layout from './Layout';
@@ -10,6 +13,7 @@ interface ListProps {
   loading: boolean;
   error: Error | null;
   getBooks: () => void; // 인자와 반환 모두 없음
+  goAdd: () => void;
   logout: () => void;
 }
 
@@ -18,6 +22,7 @@ export default function List({
   loading,
   getBooks,
   error,
+  goAdd,
   logout,
 }: ListProps) {
   useEffect(() => {
@@ -29,7 +34,7 @@ export default function List({
       logout();
     }
   }, [error, logout]);
-  const goAdd = () => {};
+
   return (
     <Layout>
       <PageHeader

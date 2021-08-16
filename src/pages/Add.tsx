@@ -1,8 +1,5 @@
 import React from "react";
+import AddContainer from '../containers/AddContainer';
 export default function Add() {
-  return (
-    <div>
-      <h1>Add</h1>
-    </div>
-  );
+  return <AddContainer />;
 }

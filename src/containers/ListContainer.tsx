@@ -4,6 +4,7 @@ import List from '../components/List';
 import { IBook, RootState } from '../types';
 import { getBooks as getBooksSagaStart } from '../redux/modules/books';
 import { logout as logoutSagaStart } from '../redux/modules/auth';
+import { push } from 'connected-react-router';
 
 export default function ListContainer() {
   const dispatch = useDispatch();
@@ -19,6 +20,10 @@ export default function ListContainer() {
   const getBooks = useCallback(() => {
     dispatch(getBooksSagaStart());
   }, [dispatch]);
+  const goAdd = useCallback(() => {
+    // dispatch 호출 : BookService
+    dispatch(push('/add'));
+  }, [dispatch]);
   const logout = useCallback(() => {
     dispatch(logoutSagaStart());
   }, [dispatch]);
@@ -28,6 +33,7 @@ export default function ListContainer() {
       loading={loading}
       getBooks={getBooks}
       error={error}
+      goAdd={goAdd}
       logout={logout}
     />
   );
