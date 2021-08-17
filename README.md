@@ -131,3 +131,10 @@ export default class UserService {
   }
 }
 ```
+
+### husky
+```shell
+npx husky install
+yarn add lint-staged -D
+npx husky add .husky/pre-commit 'lint-staged'
+```
