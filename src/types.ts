@@ -1,4 +1,5 @@
 import { RouterState } from 'connected-react-router';
+import { Action } from 'redux';
 import { AnyAction, Reducer } from 'redux';
 
 export type LoginReqType = {
@@ -12,7 +13,38 @@ export interface AuthState {
   error: Error | null;
 }
 
+export interface BooksState {
+  books: IBook[] | null;
+  loading: boolean;
+  error: Error | null;
+}
+
 export interface RootState {
   auth: AuthState;
+  books: BooksState;
   router: Reducer<RouterState<unknown>, AnyAction>;
+}
+
+export interface IBook {
+  bookId: number;
+  title: string;
+  author: string;
+  message: string;
+  url: string;
+  createdAt: string;
+}
+
+export interface BookReqType {
+  title: string;
+  comment: string;
+  author: string;
+  url: string;
+}
+
+export interface AddBookAction extends Action {
+  payload: BookReqType;
+}
+
+export interface DeleteBookAction extends Action {
+  payload: number;
 }

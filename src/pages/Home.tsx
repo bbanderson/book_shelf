@@ -1,14 +1,10 @@
-import React from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { logout } from '../redux/modules/auth';
-import { RootState } from '../types';
-export default function Home() {
-  const dispatch = useDispatch();
+import ListContainer from '../containers/ListContainer';
+import useToken from '../hooks/useToken';
 
-  const token = useSelector<RootState, string | null>(
-    (state) => state.auth.token
-  );
+export default function Home() {
+  const token = useToken();
 
   if (!token) {
     return <Redirect to="/signin" />;
@@ -16,12 +12,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Home</h1>
-      <button onClick={click}>로그아웃</button>
+      <ListContainer />
     </div>
   );
-
-  function click() {
-    dispatch(logout());
-  }
 }
