@@ -1,41 +1,50 @@
 # Book Shelf
+
 > 📚 Book Shelf Web Application in TypeScript, React and Redux.
+
 ---
+
 ### 1. 개발 환경 초기화
+
 ```shell
 npx create-react-app . --template typescript
 ```
 
 ### 2. 라우팅을 위한 라이브러리 준비
+
 ```shell
 yarn add react-router-dom
 yarn add @types/react-router-dom -D # 타입스크립트를 위함
 ```
 
 ### 3. 에러 핸들링 페이지 라이브러리 준비
+
 ```shell
 yarn add react-error-boundary # componentDidPatch로 런타임 에러 핸들링 → 에러 페이지로 이동시킨다.
 ```
+
 ```tsx
-import { ErrorBoundary } from "react-error-boundary";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { ErrorBoundary } from 'react-error-boundary';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Error from './pages/Error';
 
 <ErrorBoundary FallbackComponent={Error}>
   <BrowserRouter>
     <Switch>
       <Route />
-        {/* ... */}
+      {/* ... */}
     </Switch>
   </BrowserRouter>
-</ErrorBoundary>
+</ErrorBoundary>;
 ```
 
 ### 4. 비동기 처리를 위한 Redux 준비
+
 ```shell
 yarn add redux react-redux redux-saga redux-devtools-extension redux-actions
 yarn add @types/{react-redux,redux-actions} -D
 ```
+
 ```
 .
 └── src
@@ -48,10 +57,12 @@ yarn add @types/{react-redux,redux-actions} -D
 ```
 
 ### 5. 디자인 라이브러리 Ant Design 준비
+
 ```shell
 yarn add antd
 yarn add @ant-design/icons
 ```
+
 ```tsx
 // index.tsx
 import 'antd/dist/antd.css';
@@ -60,19 +71,24 @@ import 'antd/dist/antd.css';
 ### 6. 로그인 설계
 
 #### 6-1.`useRef`를 활용한 Uncontrolled Component 방식으로 input 데이터 관리
+
 ```tsx
 // signin.tsx
 /* ... */
 const emailRef = useRef<Input>(null); // null 할당을 통해 타입 에러 방지
 /* ... */
-<Input ref={emailRef} />
+<Input ref={emailRef} />;
 /* ... */
 ```
+
 #### 6-2. 로그인 API 호출 함수 타입 정의
-children을 제외하고는 `interface`에서 정의한 타입과 Component의 `props`가 동일해집니다.  
+
+children을 제외하고는 `interface`에서 정의한 타입과 Component의 `props`가 동일해집니다.
+
 ```tsx
 // Signin.tsx (Component)
-type LoginReqType = { // types.ts로 분리함으로써 재사용하게 함
+type LoginReqType = {
+  // types.ts로 분리함으로써 재사용하게 함
   email: string;
   password: string;
 };
@@ -133,8 +149,13 @@ export default class UserService {
 ```
 
 ### husky
+
 ```shell
 npx husky install
 yarn add lint-staged -D
 npx husky add .husky/pre-commit 'lint-staged'
 ```
+
+# Collaborator
+
+kidol7
